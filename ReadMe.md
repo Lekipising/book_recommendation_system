@@ -1,5 +1,6 @@
 # Book Recommendation System
 
+
 ## Installation
 We recommend using a virtual environment to keep your dependencies organized. And if you are using a virtual environment, you can install the dependencies in the virtual environment.
 This way you do not have to overload your system with dependencies.
@@ -49,6 +50,5 @@ This project is licensed under the MIT license.
 - v0.1.1: Added the `main.py` and `books.csv` files
 - v0.1.2: Added the `requirements.txt` file
 - v0.1.3: Added the `ReadMe.md` file
-
 
 
