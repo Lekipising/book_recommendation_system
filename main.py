@@ -6,6 +6,7 @@ from sklearn.cluster import KMeans
 from sklearn import neighbors
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
+from matplotlib.backends.backend_pdf import PdfPages
 
 df = pd.read_csv("books.csv", on_bad_lines="skip")
 # print(df.head())
@@ -22,9 +23,11 @@ df = pd.read_csv("books.csv", on_bad_lines="skip")
 top_ten = df[df["ratings_count"] > 1000000]
 top_ten.sort_values(by="average_rating", ascending=False)
 plt.style.use("seaborn-whitegrid")
-plt.figure(figsize=(10, 10))
+plt.figure(figsize=(10, 10), dpi=80)
 data = top_ten.sort_values(by="average_rating", ascending=False).head(10)
-sns.barplot(x="average_rating", y="title", data=data, palette="inferno")
+sns.barplot(x="average_rating", y="title", data=data, palette="brg")
+# increase size
+# show graph
 
 # top authors
 most_books = (
@@ -36,7 +39,7 @@ most_books = (
     .set_index("authors")
 )
 plt.figure(figsize=(15, 10))
-ax = sns.barplot(most_books["title"], most_books.index, palette="inferno")
+ax = sns.barplot(most_books["title"], most_books.index, palette="brg")
 ax.set_title("Top 10 authors with most books")
 ax.set_xlabel("Total number of books")
 totals = []
@@ -52,13 +55,17 @@ for i in ax.patches:
         color="black",
     )
 
+# show graph
+
 
 # books have been reviewed the most.
 most_rated = (
-    df.sort_values("ratings_count", ascending=False).head(10).set_index("title")
+    df.sort_values("ratings_count", ascending=False).head(
+        10).set_index("title")
 )
 plt.figure(figsize=(15, 10))
-ax = sns.barplot(most_rated["ratings_count"], most_rated.index, palette="inferno")
+ax = sns.barplot(most_rated["ratings_count"],
+                 most_rated.index, palette="brg")
 totals = []
 for i in ax.patches:
     totals.append(i.get_width())
@@ -71,6 +78,9 @@ for i in ax.patches:
         fontsize=15,
         color="black",
     )
+
+# show graph
+
 
 # find a relation between our average score and the number of scores.
 df.average_rating = df.average_rating.astype(float)
@@ -103,23 +113,28 @@ ax = sns.relplot(
 )
 ax.set_axis_labels("Average Rating", "Number of Pages")
 
-# plt.show()
+
+plt.show()
 
 # make copy
 df2 = df.copy()
 
 # create a new column called ‘rating_between’.df2.loc[ (df2['average_rating'] >= 0) & (df2['average_rating'] <= 1), 'rating_between'] = "between 0 and 1"
 df2.loc[
-    (df2["average_rating"] > 1) & (df2["average_rating"] <= 2), "rating_between"
+    (df2["average_rating"] > 1) & (
+        df2["average_rating"] <= 2), "rating_between"
 ] = "between 1 and 2"
 df2.loc[
-    (df2["average_rating"] > 2) & (df2["average_rating"] <= 3), "rating_between"
+    (df2["average_rating"] > 2) & (
+        df2["average_rating"] <= 3), "rating_between"
 ] = "between 2 and 3"
 df2.loc[
-    (df2["average_rating"] > 3) & (df2["average_rating"] <= 4), "rating_between"
+    (df2["average_rating"] > 3) & (
+        df2["average_rating"] <= 4), "rating_between"
 ] = "between 3 and 4"
 df2.loc[
-    (df2["average_rating"] > 4) & (df2["average_rating"] <= 5), "rating_between"
+    (df2["average_rating"] > 4) & (
+        df2["average_rating"] <= 5), "rating_between"
 ] = "between 4 and 5"
 
 # split the language code column to retrieve these languages
@@ -167,7 +182,8 @@ def BookRecommender(book_name):
     return book_list_name
 
 
-BookNames = BookRecommender("Harry Potter and the Half-Blood Prince (Harry Potter  #6)")
+BookNames = BookRecommender(
+    "Harry Potter and the Half-Blood Prince (Harry Potter  #6)")
 
 for book in BookNames:
     print(book)
