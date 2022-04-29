@@ -36,7 +36,7 @@ This project is licensed under the MIT license.
 
 ## Authors
 - [Bello Moussa](https://www.github.com/mamane19)
-- [Liplan Lekipisink](https://www.github.com/lekipisink)
+- [Liplan Lekipising](https://www.github.com/lekipising)
 
 
 ## Version
